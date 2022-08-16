@@ -195,7 +195,7 @@ arcpy.analysis.Buffer(inMemSplitTrail, inMemBuffTrail, buffDist, 'FULL', 'FLAT',
 if arcpy.Exists(slopeRaster): #slope raster already exists in workspace
     arcpy.AddMessage("Slope Raster exists, skipping to next step.")
 elif slopeParam: #easy way to check if the optional slope raster has been inputted, if so, make it the slope Raster
-    slopeParam = slopeRaster
+    slopeRaster =slopeParam #user input is not the slope raster
     arcpy.AddMessage("Using your optional input " + slopeParam + " as the sloep raster. No need for the tool to generate a new slope raster.")
 else:
     arcpy.AddMessage("Creating slope layer from input DEM...this may take a bit")
