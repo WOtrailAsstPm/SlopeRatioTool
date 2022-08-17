@@ -9,32 +9,27 @@ import arcpy
 #Requires Advanced License.
 
 #set variables from params
-#Toolbox side to add a drop down for units for the point dist and buffer dist
 dem = arcpy.GetParameterAsText(0)
 sr = arcpy.Describe(dem).spatialReference
 slopeParam = arcpy.GetParameterAsText(1)
 trail = arcpy.GetParameterAsText(2)
-
-#Toolbox side to add a drop down for units for the point dist and buffer dist
-pointDist = arcpy.GetParameterAsText(3)
-buffDist = arcpy.GetParameterAsText(4)  #buffer size needs to be at least twice as large as cell size to pick up elevation data in zonal stats calc
-unitName = arcpy.GetParameterAsText(5) 
+trailName = arcpy.GetParameterAsText(3)
+pointDist = arcpy.GetParameterAsText(4)
+buffDist = arcpy.GetParameterAsText(5)  #buffer size needs to be at least twice as large as cell size to pick up elevation data in zonal stats calc
+unitName = arcpy.GetParameterAsText(6) 
 
 
 #variables with hardcoded names
 slopeRaster = unitName +'Slope_dem'
 trailProj = "trailProjected"
 joiner = "Joiner"
-trailName = "TRAIL_NAME"
+#trailName = "TRAIL_NAME" no longer need hardcoded as it is a parameter in the tool
 hiSus = "1-High Sustainability"
 modSus = "2-Moderate Sustainability"
 lowSus ="3-Low Sustainability"
 unSus = "4-Unsustainable"
 unSusMod ="5-Moderately Unsustainable"
 unSusHi = "6-Highly Unsustainable"
-
-#AT paper variables
-
 
 #final features
 inDepthFinalFeature = unitName + 'InDepthTrail'
@@ -253,7 +248,7 @@ with arcpy.da.UpdateCursor (inMemSplitTrail, ['SLOPERATIO', 'Joiner', 'Avg_Slope
             row[4] = susScore(row[2],meanDict[trailKeyValue])
             
             #put miles into each column head for those mile types
-            #Forcing something that coul probably be done by pandas or easiyl in a pivot table in excel.
+            #Forcing something that coul probably be done by pandas or easily in a pivot table in excel.
             #Trying to keep it reeeeeallly easy for whoever runs this. 
             #Eventual ideal output would have feature class with:
                 #trails by trail name, miles in each category, percent in each category, and total miles percent sustainable, total miles percent unsustainable
