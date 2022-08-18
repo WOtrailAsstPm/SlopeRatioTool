@@ -59,27 +59,33 @@ Used to create slope raster (if not provided) and calculate trail grade
 * Integer type (tool will fail otherwise). Tested with 10m DEM.
 * This can be any resolution/cellsize, but the process does get slower the higher the resolution. 
 * Clip the DEM to the Admin Boundary of your Forest for faster processing.  Too large of a DEM (say the entire state or country) and the script will take forever to derive a slope raster.
+
 Trails Layer with a Trail Name or Trail Number field
 * Tested with TrailNFS_Publish clipped to AdministrativeForest or other forest boundary.  
+
 Optional Raster
 Percent Rise Slope Raster: used to calculate landform grade
 * Derived from input DEM and in same projection.
 * This will speed up the process as the script doesn’t need to derive slope from DEM.
 * If you don’t have a slope raster, the tool will create one for you. Leave this parameter blank.
+
 Other Required Inputs
 Trail Name or Number Field  
 Dropdown list derived from the input Trail Layer.  Select the field that you want to use to summarize the results.  Trail Name generally works best unless you know trail numbers by heart.
+
 Trail Segment Distance with units 
 Breaks the trail feature into X length segments. Used to assign individual slope ratio and other calculations.
 * Tested with 100-meter segments.
 * The smaller the segment, the more time it will take to process.
 * The larger the segment, the quicker it will process but the less exact the results will be.
 * Any segmentation below the cell size of the raster (i.e. 5m on a 10m DEM) will not yield accurate results.
+
 Trail Buffer Distance with units 
 The distance to buffer the trail segment on both sides. Used to calculate the prevailing landform grade.
 * Tested with 60 meter buffers.
 * Should be at least two times the cell size for the raster for best results. If you use less than that it may not pick up enough slope data to assign a value for your segment. (explained here: https://pro.arcgis.com/en/pro-app/2.8/tool-reference/spatial-analyst/how-zonal-statistics-works.htm)
 * The idea is to get enough of the prevailing slope to give a decent average without including extraneous data that will throw off the average.
+
 Unit Name 
 A text field that will append the unit name to the output files.
 Example: with WMNF as input unit the output would be WMNFInDepthTrail and WMNFSummaryTrail.
