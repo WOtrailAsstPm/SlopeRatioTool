@@ -4,9 +4,14 @@ import arcpy
 #Original script from Fletcher Meadema, PhD student at Virginia Tech <trailresearch@vt.edu>
 #Modified by Andy Welsh andrew.welsh@usda.gov
 
-#Script generates a slope ratio (average trail grade/ average landform grade) for XXX length segments along a trail
+#Script generates a slope ratio (average trail grade/ average landform grade) and other slope characteristics for XXX length segments along a trail
 #Developed for ArcPro
 #Requires Advanced License.
+
+#TODO: is it possible to allow for users to add multiple other resource layers of concern
+#intersect those layers and add a field for each layer with a simple boolen (true/false)
+#for instance user adds arch layer, bad soils layer, and critical habitat layer
+#each segment would be able to say if they intersect that layer or not
 
 #set variables from params
 dem = arcpy.GetParameterAsText(0)
@@ -112,7 +117,7 @@ def susScore(inTrailGrade, inLandformGrade):
 
 #function to classify final summary table according to STAT breakouts
 def statScore(inSusPct):
-    #trapping a nonetpye error with a conditional
+    #trapping a nonetype error with a conditional
     if inSusPct is not None:
         susPct = inSusPct
     else:
@@ -140,14 +145,11 @@ arcpy.AddMessage("Done")
     
     
 #create points at XX intervals along the line
+#adjust this parameter to suit your DEM and analysis needs
 arcpy.AddMessage("Generating points at " + pointDist + " intervals on " + trail + "...")
 arcpy.management.GeneratePointsAlongLines(trailProj, inMemPts, 'DISTANCE',pointDist,"", 'END_POINTS')
 arcpy.AddMessage("Done")
-    #Alter this code block to set the "scale" of analysis.  
-    #This places points every XX meters on the trail to measure the trail in XX segments.  
-    #30m may be an appropriate scale for a 10m dem i think?
-    #3m for 1m dem might be good
-    #adjust this parameter to suit your DEM and analysis needs
+ 
 
 # #Splits the trail layer at XX meter interval points
 #This is where it hangs on large inputs
