@@ -8,10 +8,13 @@ import arcpy
 #Developed for ArcPro
 #Requires Advanced License.
 
-#TODO: is it possible to allow for users to add multiple other resource layers of concern
-#intersect those layers and add a field for each layer with a simple boolen (true/false)
+#TODO: allow for users to add multiple other resource layers of concern
+#intersect those layers and add a field for each layer with that value or maybe simple boolen (true/false)
 #for instance user adds arch layer, bad soils layer, and critical habitat layer
 #each segment would be able to say if they intersect that layer or not
+
+#TODO: Find soultion to working with multiple raster inputs. This tool really hates large Lidar datasets.  
+#It is set to run with one input DEM and an optional slope DEM. Mosaic raster sets throw a 9999 error.
 
 #set variables from params
 dem = arcpy.GetParameterAsText(0)
@@ -193,7 +196,7 @@ if arcpy.Exists(slopeRaster): #slope raster already exists in workspace
     arcpy.AddMessage("Slope Raster exists, skipping to next step.")
 elif slopeParam: #easy way to check if the optional slope raster has been inputted, if so, make it the slope Raster
     slopeRaster =slopeParam #user input is not the slope raster
-    arcpy.AddMessage("Using your optional input " + slopeParam + " as the sloep raster. No need for the tool to generate a new slope raster.")
+    arcpy.AddMessage("Using your optional input " + slopeParam + " as the slope raster. No need for the tool to generate a new slope raster.")
 else:
     arcpy.AddMessage("Creating slope layer from input DEM...this may take a bit")
     arcpy.ddd.SurfaceParameters(dem,slopeRaster, 'SLOPE', 'QUADRATIC','5 METERS', 'FIXED_NEIGHBORHOOD', '', 'PERCENT_RISE')
