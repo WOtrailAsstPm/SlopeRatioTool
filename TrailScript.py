@@ -63,7 +63,7 @@ def susScore(inTrailGrade, inLandformGrade):
     
     if trailGrade >= lfGrade: #the trail grade is higher than the landform grade due to a sampling issue
         outSusScore = unSus #really not possible, but the zonal sample might say it is.  treating as 100% slope ratio or fall line trail
-    
+        #could also use more nuance here.  If it is 100% slope ratio but only 2% trail grade that is significantly more sustainable than 20% slope and 100% slope ratio
     elif trailGrade <= 2:
         if lfGrade <= 2:
             outSusScore = unSusMod
